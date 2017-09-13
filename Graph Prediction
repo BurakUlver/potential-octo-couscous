@@ -5,91 +5,111 @@ from sklearn.metrics import mean_squared_error, r2_score
 import mysql.connector
 import datetime
 
-
+# MySQL bağlantısı yapılır.
 connection = mysql.connector.connect(host='192.168.1.168',
                                      port=3306,
                                      user='burak.ulver',
                                      password='****',
                                      database='new_schema')
+                                     
+# for döngüsüne girmeden önce başlangıç Metric Numarası atanır.
 metric_no =110
 
+# Grafik üzerine 6 adet tahmin yapması için for döngüsü oluşturulur.
+# Bu döngü sonucunda algoritmanın veri üzerine oluşturduğu pattern elde edilir.
 for i in range(0,6):
   
+  # Metric no:110 ile 119 arasındaki veriler işlenmek için for döngüsüne sokulur.
   for j in range(0,10):
+    
     query = connection.cursor()
-
+    
+    # MetricValue ve MetricValueDate değerlerini elde etmek için MySQL kodu yazılır.
     x_view = 'SELECT MetricValueDate FROM new_schema.GraphView INNER JOIN new_schema.MetricDetail ON GraphView.MetricNo = MetricDetail.MetricNo AND GraphView.SubMetricNo = MetricDetail.SubMetricNo WHERE GraphView.idGraph =%s ORDER BY MetricValueDate;'%(metric_no)
     y_view = 'SELECT MetricValue FROM new_schema.GraphView INNER JOIN new_schema.MetricDetail ON GraphView.MetricNo = MetricDetail.MetricNo AND GraphView.SubMetricNo = MetricDetail.SubMetricNo WHERE GraphView.idGraph =%s ORDER BY MetricValueDate;'%(metric_no)
+    
+    # MetricValue Date verileri X, MetricValueDate değerleri y list'ine atanır.
     query.execute(x_view)
     X = query.fetchall()
 
     query.execute(y_view)
     y = query.fetchall()
 
+    # Data'nın satır sayısı numrows değişkenine atanır.
     numrows = query.rowcount
 
-    # Load the diabetes dataset
+    # X eksenini oşulturacak boş bir arr_X (numrows sayısı kadar satır,1 sütun) numpy array'i oluşturulur. 
     arr_X = np.array([datetime.timedelta(0, 1, 36000)])
     arr_X = np.zeros((numrows,1),dtype='datetime64[ns]')
-
+    
+    # Matematiksel işlem yapılabilmesi için for döngüsü ile list, numpy array'ine dönüştürülür.
     k = 0
     for l in range(0,numrows):
       arr_X[k] = X[l]
       k += 1
     
-
+    # X verilerini train ve test verisi şeklinde ayırmak için boş bir arr_X1 (numrows sayısı kadar satır,1 sütun) numpy array'i oluşturulur.
     arr_X1 = np.zeros((numrows,1),dtype=int)
+    
+  
     for m in range(0,numrows):
       arr_X1[m]=m
   
 
-    # Split the data into training/testing sets
+    # Verinin ne kadarı ile Train yapılacağı ve tahmin etmek istenen test verileri belirtilir..
     arr_X1_train = np.array(arr_X1[:-7])
     arr_X1_test = np.array(arr_X1[-7:])
 
-    # Split the targets into training/testing sets
+    # Y eksenini oşulturacak boş bir arr_y (numrows sayısı kadar satır,1 sütun) numpy array'i oluşturulur. 
 
     arr_y = np.zeros((numrows, 1),dtype='float64')
+    
+    #Matematiksel işlem yapılabilmesi için for döngüsü ile list, numpy array'ine dönüştürülür.
     n = 0
     for o in range(0, numrows):
       arr_y[n] = y[o]
       n += 1
 
-
+    # Train ve test verileri ayrıştırılır.
     arr_y_train = np.array(arr_y[:-7])
     arr_y_test = np.array(arr_y[-7:])
     
 
 
-    # Create linear regression object
+    # Regülasyon Modeli seçilir.
     regr = svm.LinearSVC()
 
-    # Train the model using the training sets
+    # Regülasyon modeli ile Train data kullanılarak algoritma eğitilir.
     regr.fit(arr_X1_train, arr_y_train.ravel())
 
-    # Make predictions using the testing set
+    # Test data kullanılarak tahmin yapılır.
     arr_y_pred = regr.predict(arr_X1_test)
 
-    # The coefficients
+    # Katsayılar
     print('Coefficients: \n', regr.coef_)
-    # The mean squared error
+    # Mean squared error
     print("Mean squared error: %.2f"
           % mean_squared_error(arr_y_test, arr_y_pred))
-    # Explained variance score: 1 is perfect prediction
+    # Variance score
     print('Variance score: %.2f' % r2_score(arr_y_test, arr_y_pred))
 
-    # Plot outputs
+    # Grafik çizilir.
     plt.figure(metric_no)
-
+    
+    # Tüm data kırmızı olarak çizdirilir.
     plt.plot(arr_X1,y , label='Data', color='r', linewidth=7)
+    # Test data'sı siyah olarak çizilir.
     plt.plot(arr_X1_test, arr_y_test, label='Test',  color='black' ,linewidth=2)
+    # Algoritmanın tahmini mavi olarak çizdirilir.
     plt.plot(arr_X1_test, arr_y_pred, label='Prediction', color='blue', linewidth=3)
+    
     plt.xlabel('Hafta')
     
     plt.title(metric_no)
 
     plt.legend()
     plt.show()
+    
     metric_no +=1
     
   metric_no =110
@@ -181,5 +201,3 @@ for i in range(0,6):
   metric_no =211
 
 connection.close()
-
-
