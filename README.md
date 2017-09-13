@@ -17,6 +17,8 @@ Anaconda Prompt'una "conda install scikit-learn"
 MySQL kütüphanesi kurulumu;
 Anaconda Prompt'una "conda install -c anaconda mysql-connector-python" kodu yazılır. 
 
+Graph Prediction'da yazan kod , Anaconda-Spyder üzerinden çalıştırılır.
+
 
 
 
