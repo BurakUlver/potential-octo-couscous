@@ -6,11 +6,11 @@ import mysql.connector
 import datetime
 
 # MySQL bağlantısı yapılır.
-connection = mysql.connector.connect(host='192.168.1.168',
-                                     port=3306,
-                                     user='burak.ulver',
-                                     password='****',
-                                     database='new_schema')
+connection = mysql.connector.connect(host = '****',
+                                     port = ****,
+                                     user = 'burak.ulver',
+                                     password = '****',
+                                     database = 'new_schema')
                                      
 # for döngüsüne girmeden önce başlangıç Metric Numarası atanır.
 metric_no =110
