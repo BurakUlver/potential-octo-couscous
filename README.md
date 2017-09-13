@@ -15,7 +15,6 @@ connection = mysql.connector.connect(host='192.168.1.168',
 
 metric_no =110
 
-
 for i in range(0,3):
   
   for j in range(1,11):
