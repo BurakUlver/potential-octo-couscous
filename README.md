@@ -7,12 +7,12 @@ from sklearn.metrics import mean_squared_error, r2_score
 import mysql.connector
 import datetime
 
-
 connection = mysql.connector.connect(host='192.168.1.168',
                                      port=3306,
                                      user='burak.ulver',
                                      password='******',
                                      database='new_schema')
+
 metric_no =110
 
 
