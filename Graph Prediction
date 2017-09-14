@@ -7,11 +7,11 @@ import datetime
 
 # MySQL bağlantısı yapılır.
 connection = mysql.connector.connect( host     = '****',
-                                      port     =  **** ,
+                                      port     =  ****,
                                       user     = '****',
                                       password = '****',
                                       database = 'new_schema')
-                                      
+                                     
 # for döngüsüne girmeden önce başlangıç Metric Numarası atanır.
 metric_no =110
 
@@ -108,7 +108,9 @@ for _ in range(0,6):
     plt.xlabel('Hafta')
     
     plt.title(metric_no)
-
+    for var in (arr_y_pred):
+      plt.annotate('%0.2f' % var.max(), xy=(1, var.max()), xytext=(1, 0), 
+                 xycoords=('axes fraction', 'data'), textcoords='offset points')
     plt.legend()
     plt.show()
     
@@ -210,6 +212,10 @@ for _ in range(0,6):
     plt.xlabel('Hafta')
     
     plt.title(metric_no)
+    
+    for var in (arr_y_pred):
+      plt.annotate('%0.2f' % var.max(), xy=(1, var.max()), xytext=(1, 0), 
+                 xycoords=('axes fraction', 'data'), textcoords='offset points')
 
     plt.legend()
     plt.show()
