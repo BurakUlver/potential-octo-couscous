@@ -7,20 +7,20 @@ import datetime
 
 # MySQL bağlantısı yapılır.
 connection = mysql.connector.connect( host     = '****',
-                                      port     = ****,
+                                      port     =  **** ,
                                       user     = '****',
                                       password = '****',
-                                      database = 'new_schema' )
-                                     
+                                      database = 'new_schema')
+                                      
 # for döngüsüne girmeden önce başlangıç Metric Numarası atanır.
 metric_no =110
 
 # Grafik üzerine 6 adet tahmin yapılması için for döngüsü oluşturulur.
 # Bu döngü sonucunda algoritmanın veri üzerine oluşturduğu pattern elde edilir.
-for i in range(0,6):
+for _ in range(0,6):
   
   # Metric no:110 ile 119 arasındaki veriler işlenmek için for döngüsüne sokulur.
-  for j in range(0,10):
+  for _ in range(0,10):
     
     query = connection.cursor()
     
@@ -44,16 +44,16 @@ for i in range(0,6):
     
     # Matematiksel işlem yapılabilmesi için for döngüsü ile list, numpy array'ine dönüştürülür.
     k = 0
-    for l in range(0,numrows):
-      arr_X[k] = X[l]
+    for _ in range(0,numrows):
+      arr_X[k] = X[_]
       k += 1
     
     # X verilerini train ve test verisi şeklinde ayırmak için boş bir arr_X1 (numrows sayısı kadar satır,1 sütun) numpy array'i oluşturulur.
     arr_X1 = np.zeros((numrows,1),dtype=int)
     
   
-    for m in range(0,numrows):
-      arr_X1[m]=m
+    for _ in range(0,numrows):
+      arr_X1[_]=_
   
 
    # Algoritmanın Train edileceği veri ve tahmin edilmek istenen test verileri belirtilir.
@@ -66,8 +66,8 @@ for i in range(0,6):
     
     #Matematiksel işlem yapılabilmesi için for döngüsü ile list, numpy array'ine dönüştürülür.
     n = 0
-    for o in range(0, numrows):
-      arr_y[n] = y[o]
+    for _ in range(0, numrows):
+      arr_y[n] = y[_]
       n += 1
 
     # Train ve test verileri ayrıştırılır.
@@ -123,10 +123,10 @@ for i in range(0,6):
 metric_no =211
 
 # Grafik üzerine 6 adet tahmin yapılması için for döngüsü oluşturulur.
-for i in range(0,6):
+for _ in range(0,6):
   
   # Metric no:211 ile 220 arasındaki veriler işlenmek için for döngüsüne sokulur.
-  for j in range(0,10):
+  for _ in range(0,10):
     query = connection.cursor()
     
      # MetricValue ve MetricValueDate değerlerini elde etmek için MySQL kodu yazılır.
@@ -149,14 +149,14 @@ for i in range(0,6):
 
     # Matematiksel işlem yapılabilmesi için for döngüsü ile list, numpy array'ine dönüştürülür.
     k = 0
-    for l in range(0,numrows):
-      arr_X[k] = X[l]
+    for _ in range(0,numrows):
+      arr_X[k] = X[_]
       k += 1
     
     # X verilerini train ve test verisi şeklinde ayırmak için boş bir arr_X1 (numrows sayısı kadar satır,1 sütun) numpy array'i oluşturulur.
     arr_X1 = np.zeros((numrows,1),dtype=int)
-    for m in range(0,numrows):
-      arr_X1[m]=m
+    for _ in range(0,numrows):
+      arr_X1[_]=_
   
 
     # Algoritmanın Train edileceği veri ve tahmin edilmek istenen test verileri belirtilir.
@@ -168,8 +168,8 @@ for i in range(0,6):
    
     #Matematiksel işlem yapılabilmesi için for döngüsü ile list, numpy array'ine dönüştürülür
     n = 0
-    for o in range(0, numrows):
-      arr_y[n] = y[o]
+    for _ in range(0, numrows):
+      arr_y[n] = y[_]
       n += 1
 
     # Train ve test verileri ayrıştırılır
